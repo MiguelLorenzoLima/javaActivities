@@ -1,9 +1,12 @@
 package classMenagent;
+
 public class Student {
     public String nome;
     public int idade;
     public double nota1;
     public double nota2;
+    public double media;
+    public boolean situacao = false;
 
     Student(String nome, int idade, double nota1, double nota2) {
         this.nome = nome;
@@ -12,32 +15,25 @@ public class Student {
         this.nota2 = nota2;
     }
 
-    public void adicionarEstoque(int quantidade) {
-        this.quantidade += quantidade;
+    public double calcularMedia() {
+        return (this.nota1 + this.nota2) / 2;
     }
 
-    public void removerEstoque(int quantidade) {
-        this.quantidade -= quantidade;
-    }
-
-    public double calcularValorEstoque(){
-        return preco * quantidade;
-    }
-
-    public void vender(int quantidadeVender){
-        if (quantidadeVender <= quantidade){
-            quantidade -= quantidadeVender;
-            System.err.println("Quantidade removida com sucesso!");
-        } else {
-            System.err.println("Quantidade insuficiente no estoque!");
+    public String estaAprovado() {
+        if (calcularMedia() < 7) {
+            return ("Reprovado");
         }
+        return ("Aprovado");
     }
 
-    public void exibirDados(){
-    System.out.println("Nome: " + nome);
-    System.out.println("Preço: R$ " + preco);
-    System.out.println("Quantidade: " + quantidade);
-    System.out.println("----------------------");
+    public void exibirDados() {
+        System.out.println("Nome: " + nome);
+        System.out.println("Idade: " + idade);
+        System.out.println("Nota 1: " + nota1);
+        System.out.println("Nota 2: " + nota2);
+        System.out.println("Situação: " + estaAprovado());
+        System.out.println("Média " + calcularMedia());
+        System.out.println("----------------------");
     }
 
 }

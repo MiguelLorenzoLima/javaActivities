@@ -1,4 +1,5 @@
 package classMenagent;
+
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -6,16 +7,15 @@ import java.util.Scanner;
 public class Class {
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
-        ArrayList<Student> produtos = new ArrayList<>();
+        ArrayList<Student> estudantes = new ArrayList<>();
         int opt = -1;
         do {
             System.out.println("==== REVENDA ====");
             System.out.println("0. Sair");
-            System.out.println("1. Cadastrar Produto");
-            System.out.println("2. Exibir os dados de todos os produtos");
-            System.out.println("3. Remover Quantidade");
-            System.out.println("4. Remover Produto");
-            System.out.println("5. Calcular valor total no estoque");
+            System.out.println("1. Cadastrar Aluno");
+            System.out.println("2. Exibir situação dos alunos");
+            System.out.println("3. Quantidade de alunos aprovados");
+            System.out.println("4. Media da turma");
             System.out.println("Digite a operação: ");
             opt = buscarOperacao(s);
             switch (opt) {
@@ -23,53 +23,50 @@ public class Class {
                     System.out.println("Adeus!");
                     break;
                 case 1:
-                    System.out.println("Digite o nome do produto: ");
+                    System.out.println("Digite o nome do aluno: ");
                     String nome = s.next();
-                    System.out.println("Digite o valor do produto");
-                    double preco = s.nextDouble();
-                    System.out.println("Digite a quantidade do produto: ");
-                    int quantidade = s.nextInt();
-                    Student produto = new Student(
+                    System.out.println("Digite a idade do aluno");
+                    int idade = s.nextInt();
+                    System.out.println("Digite a primeira nota do aluno: ");
+                    double nota1 = s.nextDouble();
+                    System.out.println("Digite a segunda nota do aluno: ");
+                    double nota2 = s.nextDouble();
+                    Student estudante = new Student(
                             nome,
-                            preco,
-                            quantidade
-                        );
-                    produtos.add(produto);
+                            idade,
+                            nota1,
+                            nota2);
+                    estudantes.add(estudante);
                     break;
                 case 2:
-                    System.out.println("Detalhes dos Produtos: ");
-                    for (Student produtoDetalhes : produtos ) {
-                        produtoDetalhes.exibirDados();
+                    System.out.println("------------------------");
+                    System.out.println("Situação dos alunos: ");
+                    for (Student situacaoAlunos : estudantes) {
+                        situacaoAlunos.exibirDados();
                     }
                     break;
                 case 3:
-                   System.out.println("Digite o nome do produto que deseja editar a quantidade: ");
-                    String nomeProduto = s.next();
-                   System.out.println("Digite a quantidade da venda");
-                    int qtddVendida = s.nextInt();
-                    for (Student produtoVenda : produtos){
-                            if (produtoVenda.nome.equals(nomeProduto)){
-                                produtoVenda.vender(qtddVendida);
-                            }
+                    int aprovados = 0;
+                    for (Student estudanteSituacao : estudantes) {
+                        if (estudanteSituacao.calcularMedia() >= 7) {
+                            aprovados++;
+                        }
                     }
+                    System.out.println("Quantidade de alunos aprovados: " + aprovados);
                     break;
                 case 4:
-                   System.out.println("Digite o nome do produto que deseja remover do estoque: ");
-                    String removerProduto = s.next();
+                    double mediaTurma = 0;
 
-                    for (int i = 0; i < produtos.size(); i++){
-                            if (produtos.get(i).nome.equals(removerProduto)){
-                                produtos.remove(i);
-                                System.out.println("O produto foi removido companheir  o");
-                            }
+                    for (Student estudanteMedia : estudantes) {
+
+                        mediaTurma += estudanteMedia.calcularMedia();
+
                     }
-                    break;
-                case 5:
-                    double valorTotal = 0;
-                    for (Student produtoEstoque : produtos){
-                        valorTotal += produtoEstoque.calcularValorEstoque(); 
-                    }
-                    System.out.println("O valor total do estoque atual é de: " + valorTotal);
+
+                    mediaTurma = mediaTurma / estudantes.size();
+
+                    System.out.println("A média da turma é: " + mediaTurma);
+
                     break;
                 default:
                     System.out.println("Operação inválida.");
