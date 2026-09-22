@@ -1,3 +1,4 @@
+package productWarehouse;
 public class Product {
     public String nome;
     public double preco;
